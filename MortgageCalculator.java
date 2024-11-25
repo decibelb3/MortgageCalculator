@@ -1,14 +1,19 @@
-
 /**
- *MortgageCalculator here.
+ * A program that calculates mortgage payments and provides financial recommendations.
  *
  * @author Shannon Burns
- * @version 10/7/2004
+ * @version 11/25/2004
  */
 import java.util.Scanner;
 
 public class MortgageCalculator {
 
+    /**
+     * The main method to run the mortgage calculator program. It collects user input,
+     * calculates mortgage details, and provides financial recommendations.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -56,7 +61,14 @@ public class MortgageCalculator {
         scanner.close();
     }
 
-    // Method to calculate the monthly mortgage payment using the standard formula
+    /**
+     * Calculates the monthly mortgage payment using the standard mortgage formula.
+     *
+     * @param loanAmount the loan amount after the down payment
+     * @param monthlyInterestRate the monthly interest rate as a decimal
+     * @param loanTermMonths the term of the loan in months
+     * @return the calculated monthly payment
+     */
     public static double calculateMonthlyPayment(double loanAmount, double monthlyInterestRate, int loanTermMonths) {
         if (monthlyInterestRate == 0) {  // If the interest rate is 0%
             return loanAmount / loanTermMonths;
@@ -66,7 +78,14 @@ public class MortgageCalculator {
         }
     }
 
-    // Method to provide financial recommendations based on salary and expenses
+    /**
+     * Provides financial recommendations based on the user's salary, expenses, and mortgage payment.
+     * Includes disposable income calculation and savings suggestions.
+     *
+     * @param salary the user's monthly salary
+     * @param expenses the user's monthly expenses
+     * @param monthlyPayment the calculated monthly mortgage payment
+     */
     public static void provideFinancialRecommendations(double salary, double expenses, double monthlyPayment) {
         double disposableIncome = salary - expenses;
 
