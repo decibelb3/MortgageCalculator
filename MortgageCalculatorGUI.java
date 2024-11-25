@@ -1,20 +1,33 @@
+/**
+ * A program that calculates mortgage payments and provides financial recommendations.
+ *
+ * @author Shannon Burns and Marina Potapova
+ * @version 11/25/2004
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+/**
+ * A GUI-based mortgage calculator that allows users to input financial details and calculates 
+ * their monthly mortgage payments along with recommendations.
+ */
 public class MortgageCalculatorGUI extends JFrame {
     private JTextField nameField;
     private JFormattedTextField salaryField, expensesField, loanAmountField, downPaymentField, interestRateField, loanTermField;
     private JTextArea resultArea;
 
+    /**
+     * Constructs the MortgageCalculatorGUI and initializes the components.
+     */
     public MortgageCalculatorGUI() {
         // Set up the main frame
         setTitle("Mortgage Calculator");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(11, 2)); 
+        setLayout(new GridLayout(11, 2));
 
         // Number format for currency fields
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
@@ -69,7 +82,9 @@ public class MortgageCalculatorGUI extends JFrame {
         add(resetButton);
     }
 
-    // Method to reset all fields
+    /**
+     * Resets all input fields and clears the result area.
+     */
     private void resetFields() {
         nameField.setText("");
         salaryField.setValue(null);
@@ -81,6 +96,10 @@ public class MortgageCalculatorGUI extends JFrame {
         resultArea.setText("");
     }
 
+    /**
+     * Listener class for the Calculate button. Handles user input, calculates the mortgage payment, 
+     * and generates recommendations.
+     */
     private class CalculateButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -113,13 +132,26 @@ public class MortgageCalculatorGUI extends JFrame {
         }
     }
 
-    // Method to calculate the monthly payment
+    /**
+     * Calculates the monthly mortgage payment using the formula.
+     *
+     * @param loanAmount the loan amount after down payment
+     * @param monthlyInterestRate the monthly interest rate as a decimal
+     * @param loanTermMonths the loan term in months
+     * @return the calculated monthly payment
+     */
     public static double calculateMonthlyPayment(double loanAmount, double monthlyInterestRate, int loanTermMonths) {
         return (loanAmount * monthlyInterestRate) /
                 (1 - Math.pow(1 + monthlyInterestRate, -loanTermMonths));
     }
 
-    // Method to generate recommendations
+    /**
+     * Generates financial recommendations based on the user's financial details and the mortgage payment.
+     *
+     * @param user the user details (name, salary, expenses)
+     * @param monthlyPayment the calculated monthly payment
+     * @return a string containing the recommendation
+     */
     public static String generateRecommendations(User user, double monthlyPayment) {
         double disposableIncome = user.getSalary() - user.getExpenses();
         if (monthlyPayment < disposableIncome * 0.3) {
@@ -131,14 +163,23 @@ public class MortgageCalculatorGUI extends JFrame {
         }
     }
 
-    // Inner LoanDetails class
+    /**
+     * A class representing loan details for the mortgage calculation.
+     */
     public class LoanDetails {
         private double loanAmount;
         private double downPayment;
         private double interestRate;
         private int loanTermYears;
 
-        // Constructor
+        /**
+         * Constructs a LoanDetails object with the specified parameters.
+         *
+         * @param loanAmount the total loan amount
+         * @param downPayment the down payment amount
+         * @param interestRate the annual interest rate as a percentage
+         * @param loanTermYears the loan term in years
+         */
         public LoanDetails(double loanAmount, double downPayment, double interestRate, int loanTermYears) {
             this.loanAmount = loanAmount;
             this.downPayment = downPayment;
@@ -146,45 +187,79 @@ public class MortgageCalculatorGUI extends JFrame {
             this.loanTermYears = loanTermYears;
         }
 
-        // Method to get the monthly interest rate
+        /**
+         * Calculates the monthly interest rate from the annual interest rate.
+         *
+         * @return the monthly interest rate as a decimal
+         */
         public double getMonthlyInterestRate() {
             return (interestRate / 100) / 12;
         }
 
-        // Method to calculate the loan amount after down payment
+        /**
+         * Calculates the loan amount after subtracting the down payment.
+         *
+         * @return the remaining loan amount after down payment
+         */
         public double calculateLoanAfterDownPayment() {
             return loanAmount - downPayment;
         }
 
-        // Method to get loan term in months
+        /**
+         * Converts the loan term from years to months.
+         *
+         * @return the loan term in months
+         */
         public int getLoanTermMonths() {
             return loanTermYears * 12;
         }
     }
 
-    // Inner User class
+    /**
+     * A class representing the user and their financial details.
+     */
     public class User {
         private String name;
         private double salary;
         private double expenses;
 
-        // Constructor
+        /**
+         * Constructs a User object with the specified parameters.
+         *
+         * @param name the name of the user
+         * @param salary the monthly salary of the user
+         * @param expenses the monthly expenses of the user
+         */
         public User(String name, double salary, double expenses) {
             this.name = name;
             this.salary = salary;
             this.expenses = expenses;
         }
 
-        // Getters
+        /**
+         * Retrieves the user's monthly salary.
+         *
+         * @return the salary
+         */
         public double getSalary() {
             return salary;
         }
 
+        /**
+         * Retrieves the user's monthly expenses.
+         *
+         * @return the expenses
+         */
         public double getExpenses() {
             return expenses;
         }
     }
 
+    /**
+     * Main method to launch the Mortgage Calculator GUI.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MortgageCalculatorGUI calculatorGUI = new MortgageCalculatorGUI();
