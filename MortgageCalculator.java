@@ -1,7 +1,7 @@
 /**
  * A program that calculates mortgage payments and provides financial recommendations.
  *
- * @author Shannon Burns
+ * @author Shannon Burns and Marina Potapova
  * @version 11/25/2004
  */
 import java.util.Scanner;
